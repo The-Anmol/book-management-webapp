@@ -10,7 +10,6 @@
 		<script src="https://www.gstatic.com/firebasejs/8.4.1/firebase-auth.js"></script>
 		<script src="https://www.gstatic.com/firebasejs/8.4.1/firebase-firestore.js"></script>
 
-		<script src="./script/auth.js"></script>
 
 		<title>Document</title>
 	</head>
@@ -26,7 +25,7 @@
 			<div class="login-container">
 				<span class="display-location"></span>
 				<h1 class="login-heading">Add new book</h1>
-				<form onchange="formChange()" class="input-container">
+				<form  class="input-container"  id="books-container">
 					<div class="single-input">
 						<input id="book-title-input" class="book-title-input" type="text" placeholder="Book Title" />
 					</div>
@@ -37,19 +36,17 @@
 							<option value="finished">Finished</option>
 						</select>
 					</div>
-					<button onclick="cacheNewBook(event)" id="add-book-button">Add Book</button>
+					<button onclick="addBook(event)" id="add-book-button">Add Book</button>
 				</form>
 			</div>
 
 			<div id="books-container">
 				<p class="books-title-cont">Books</p>
-				<!-- <div class="book">
-          <p>Title</p>
-          <p>Status</p>
-        </div>-->
+				<div class="all-books" id="books-container" ></div>
 			</div>
 		</main>
 	</body>
+		<script src="./script/auth.js"></script>
 	<script src="./script/home.js"></script>
 	<script>
 		document.querySelectorAll('span.display-email')[0].innerText = localStorage.getItem('email');
