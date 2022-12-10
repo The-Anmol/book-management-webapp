@@ -26,6 +26,7 @@ function register() {
 			if (doPassHaveSpaces(pass)) {
 				auth.createUserWithEmailAndPassword(email, pass)
 					.then((userCred) => {
+						console.log(userCred.user.uid);
 						writeUserData(userCred.user.uid);
 						localStorage.setItem('uid', userCred.user.uid);
 						isLoggedIn = true;
@@ -68,7 +69,11 @@ function signIn() {
 	var email = document.getElementById('login-email').value;
 	var pass = document.getElementById('login-pass').value;
 	auth.signInWithEmailAndPassword(email, pass)
-		.then((e) => {
+		.then((res) => {
+			console.log(res.user.uid);
+			localStorage.setItem('email', res.user.email);
+			localStorage.setItem('uid', res.user.uid);
+
 			redirect('home.html');
 		})
 		.catch((e) => alert(e.message));
@@ -77,8 +82,8 @@ function signIn() {
 //signOut
 function signOut() {
 	auth.signOut();
-	alert('Sign Out Successfully from System');
 	localStorage.clear();
+	redirect('');
 }
 
 // active user to homepage
@@ -250,7 +255,9 @@ function displayData(data) {
 	console.log(' Data Displayed from IndexedDB');
 }
 
-getBooksData(localStorage.getItem('uid'));
+const uid = localStorage.getItem('uid');
+console.log(uid);
+uid && getBooksData(uid);
 
 // const add-book-button = document.getElementById("add-book-button")
 function cacheNewBook(event) {
