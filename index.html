@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link rel="stylesheet" href="./style/login.css" />
+		<link rel="stylesheet" href="./style/index.css" />
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet" />
+
+		<!-- Firebase Scripts -->
+		<script src="https://www.gstatic.com/firebasejs/8.4.1/firebase-app.js"></script>
+		<script src="https://www.gstatic.com/firebasejs/8.4.1/firebase-auth.js"></script>
+		<script src="https://www.gstatic.com/firebasejs/8.4.1/firebase-firestore.js"></script>
+		<script src="./script/auth.js"></script>
+
+		<!-- to be removed -->
+		<link rel="manifest" href="/manifest.json" />
+		<link rel="stylesheet" href="https://unpkg.com/onsenui/css/onsenui.min.css" />
+		<link rel="stylesheet" href="https://unpkg.com/onsenui/css/onsen-css-components.min.css" />
+		<script src="https://unpkg.com/onsenui/js/onsenui.min.js"></script>
+		<script>
+			if ('serviceWorker' in navigator) {
+				navigator.serviceWorker
+					.register('/sw.js')
+					.then(() => console.log('Service Worker Registered'))
+					.catch((e) => console.log(e));
+			}
+		</script>
+
+		<title>Login</title>
+	</head>
+	<body>
+		<main class="main">
+			<div class="login-container">
+				<h1 class="login-heading">Login to your account</h1>
+				<p class="login-sub-heading">
+					Don't have an account yet?
+					<a href="/signup.html">Signup</a>
+				</p>
+				<div class="login-container">
+					<input id="login-email" class="email-input" type="email" placeholder="Email address" />
+					<div class="single-input">
+						<input id="login-pass" class="password-input" type="password" placeholder="Password" />
+						<p class="login-pass-helper-text helper-text"></p>
+					</div>
+
+					<div class="other-options-container">
+						<div class="remember-me-options-container">
+							<input onchange="togglePassVis()" class="show-pass-checkbox checkbox" type="checkbox" name="" id="" />
+							<p>Show Password</p>
+						</div>
+						<a class="forgot-password-link" href="/forget-password.html">Forgot your password?</a>
+					</div>
+				</div>
+
+				<button onclick="signIn()" class="login-button">Login</button>
+				<ons-button onclick="alert('You clicked me!')">Click Me</ons-button>
+			</div>
+		</main>
+		<script src="./login.js"></script>
+	</body>
+</html>

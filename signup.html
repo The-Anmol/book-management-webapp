@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link rel="stylesheet" href="./style/sign-up.css" />
+		<link rel="stylesheet" href="./style/index.css" />
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<!-- Google Fonts -->
+		<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet" />
+		<!-- Firebase Scripts -->
+		<script src="https://www.gstatic.com/firebasejs/8.4.1/firebase-app.js"></script>
+		<script src="https://www.gstatic.com/firebasejs/8.4.1/firebase-auth.js"></script>
+		<script src="https://www.gstatic.com/firebasejs/8.4.1/firebase-firestore.js"></script>
+		<!-- Auth Script -->
+		<script src="./script/auth.js"></script>
+		<title>Sign up</title>
+	</head>
+	<body>
+		<main class="main">
+			<div class="login-container">
+				<h1 class="login-heading">Signup to create an account</h1>
+				<p class="login-sub-heading">
+					Already have an account?
+					<a href="/">Login</a>
+				</p>
+				<form onchange="formChange()" class="input-container">
+					<div class="single-input">
+						<input id="email" class="email-input" type="email" placeholder="Email address" />
+					</div>
+					<div class="single-input">
+						<input id="password" class="password-input" type="password" placeholder="Password" />
+						<p class="pass-helper helper-text"></p>
+					</div>
+					<div class="single-input">
+						<input id="c-password" class="c-password-input" type="text" placeholder="Confirm Password" />
+						<p class="c-pass-helper helper-text"></p>
+					</div>
+					<div class="other-options-container">
+						<div class="remember-me-options-container">
+							<input onchange="togglePassVis()" class="show-pass-checkbox checkbox" type="checkbox" name="" id="" />
+							<p>Show Password</p>
+						</div>
+					</div>
+				</form>
+				<button onclick="register()" class="login-button">Create Account</button>
+			</div>
+		</main>
+	</body>
+</html>

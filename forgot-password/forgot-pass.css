@@ -1,0 +1,70 @@
+main {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    background-image: linear-gradient(to bottom right, #872ce6, #c084fc);
+}
+
+h1,
+p,
+a {
+    margin: 0;
+}
+
+h1 {
+    font-weight: bold;
+}
+
+.forgot-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 1.25rem;
+    gap: 18px;
+    background: #fff;
+    border-radius: 5px;
+}
+
+input {
+    width: 100%;
+    padding: 0.5rem;
+    border-radius: 5px;
+    border: gray 1px solid;
+    font-weight: medium;
+}
+
+input::placeholder {
+    color: #94a3b8;
+}
+
+.login-button {
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 5px;
+    background-color: #872ce6;
+    color: white;
+    width: 100%;
+}
+
+.other-options-container {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.remember-me-options-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.remember-me-options-container>p,
+.forgot-password-link {
+    font-size: 14px;
+}
+
+.checkbox {
+    width: 15px;
+    aspect-ratio: 1;
+}

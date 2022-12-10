@@ -1,0 +1,89 @@
+main {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+h1,
+p,
+a {
+  margin: 0;
+}
+h1 {
+  font-weight: bold;
+}
+.show-pass-cont {
+  width: 100%;
+  display: flex;
+}
+.login-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1.25rem;
+  gap: 18px;
+  background: #fff;
+  border-radius: 5px;
+}
+.input-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  background: #fff;
+  border-radius: 5px;
+}
+
+input::placeholder {
+  color: #94a3b8;
+}
+
+.login-button {
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 5px;
+  background-color: #872ce6;
+  color: white;
+  width: 100%;
+}
+
+.other-options-container {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.remember-me-options-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.remember-me-options-container > p,
+.forgot-password-link {
+  font-size: 14px;
+}
+
+.checkbox {
+  width: 15px;
+  aspect-ratio: 1;
+}
+
+.other-options-container {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+.remember-me-options-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.remember-me-options-container > p,
+.forgot-password-link {
+  font-size: 14px;
+}
+.checkbox {
+  width: 15px;
+  aspect-ratio: 1;
+}
