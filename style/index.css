@@ -7,16 +7,18 @@
   padding: 0;
 }
 body {
-  min-height: 100vh;
-  min-width: 100vh;
+  
   font-family: "Roboto", sans-serif;
-  background: linear-gradient(to bottom right, #872ce6, #c084fc) no-repeat;
+ 
 }
 main {
   padding: 1.5rem;
   display: flex;
   align-items: center;
   justify-content: center;
+ 
+  height: 100vh;
+  width: 100%;
 }
 button {
   cursor: pointer;
@@ -45,8 +47,9 @@ a {
   color: red;
 }
 .navbar {
-  background: #fff;
+  /* background: #fff; */
   padding: 1rem;
+  background: linear-gradient(to bottom right, #872ce6, #c084fc) no-repeat;
 }
 
 input,
@@ -81,4 +84,8 @@ select {
 .display-email{
 
   text-transform: capitalize;
+}
+.flex {
+  display: flex;
+  justify-content: center;
 }

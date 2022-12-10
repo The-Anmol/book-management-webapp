@@ -15,15 +15,16 @@
 		<title>Document</title>
 	</head>
 	<body onload="getLocation()">
-		<nav class="navbar">
-			<div class="flex" style="display: flex; justify-content: space-between; vertical-align: center">
+		<nav class="navbar" class="flex">
+			<div style="display: flex; justify-content: space-between; vertical-align: center">
 				<div>Hi <span class="display-email"></span></div>
-				<span class="display-location"></span>
+
 				<button onclick="signOut()">Sign out</button>
 			</div>
 		</nav>
 		<main style="display: flex; flex-direction: column" class="main">
 			<div class="login-container">
+				<span class="display-location"></span>
 				<h1 class="login-heading">Add new book</h1>
 				<form onchange="formChange()" class="input-container">
 					<div class="single-input">
