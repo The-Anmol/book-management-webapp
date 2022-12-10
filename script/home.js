@@ -15,48 +15,12 @@ const getLocation = () => {
 		console.log(document.querySelectorAll('span.display-location'));
 		document.querySelectorAll('span.display-location')[0].innerText = `with latitude ${dataObj.coords.latitude} & longitude ${dataObj.coords.longitude}`;
 	});
-	Notification.requestPermission().then((result) => {
-		console.log(result);
-	});
-	Notification.requestPermission();
 };
-
-function askNotificationPermission() {
-	// function to actually ask the permissions
-	function handlePermission(permission) {
-		// set the button to shown or hidden, depending on what the user answers
-		// notificationBtn.style.display = Notification.permission === 'granted' ? 'none' : 'block';
-	}
-
-	// Let's check if the browser supports notifications
-	if (!('Notification' in window)) {
-		console.log('This browser does not support notifications.');
-	} else if (checkNotificationPromise()) {
-		Notification.requestPermission().then((permission) => {
-			handlePermission(permission);
-		});
-	} else {
-		Notification.requestPermission((permission) => {
-			handlePermission(permission);
-		});
-	}
-}
-function checkNotificationPromise() {
-	try {
-		Notification.requestPermission().then();
-	} catch (e) {
-		return false;
-	}
-
-	return true;
-}
-
-// notification
 
 if ('Notification' in window && 'serviceWorker' in navigator) {
 	switch (Notification.permission) {
 		case 'denied':
-			notificationNotAllowed();
+			alert('notification denied ');
 			break;
 
 		case 'default':
@@ -67,35 +31,18 @@ if ('Notification' in window && 'serviceWorker' in navigator) {
 			displayNotification();
 			break;
 	}
-} else {
-	notificationNotAllowed();
-}
-
-function notificationNotAllowed() {
-	// mainDiv.style.display = "none";
-	// button.style.display = "block";
-}
+} else alert('notification denied ');
 
 function requestUserPermission() {
 	Notification.requestPermission().then((permission) => {
-		if (permission === 'granted') {
-			displayNotification();
-			// button.style.display = "none";
-			// mainDiv.style.display = "block";
-		} else {
-			notificationNotAllowed();
-			// mainDiv.style.display = "none";
-			// button.style.display = "block";
-		}
+		if (permission === 'granted') displayNotification();
+		else alert('notification denied ');
 	});
 }
 function displayNotification() {
-	// const title = document.getElementById('title').value;
-	// const body = document.getElementById('body').value;
 	const title = 'Title';
 	const body = 'Body';
 
-	const errorView = document.getElementById('message');
 	if (title != '') {
 		const options = {
 			body: body,
@@ -113,14 +60,30 @@ function displayNotification() {
 		};
 		navigator.serviceWorker.ready.then((registration) => {
 			registration.showNotification(title, options);
-			// errorView.style.display = 'none';
+			console.log('registration', registration);
 		});
-	} else {
-		errorView.style.display = 'block';
 	}
-
 	navigator.serviceWorker.addEventListener('message', (message) => {
 		const notificationMessage = document.getElementById('broadcast');
 		notificationMessage.innerHTML = message.data;
 	});
 }
+
+// Notification.requestPermission();
+
+// // Let's check if the browser supports notifications
+// if (!('Notification' in window)) alert('This browser does not support notifications.');
+// else if (checkNotificationPromise()) Notification.requestPermission().then((permission) => {});
+// else Notification.requestPermission((permission) => {});
+
+// function checkNotificationPromise() {
+// 	try {
+// 		Notification.requestPermission().then((result) => {
+// 			console.log(result);
+// 		});
+// 	} catch (e) {
+// 		return false;
+// 	}
+
+// 	return true;
+// }
