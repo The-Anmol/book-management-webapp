@@ -135,9 +135,18 @@ if (localStorage.getItem("uid")) {
   ];
 
   //   books.map((book) => console.log(book));
-  books.map((book) => {
-    console.log(book.status.stringValue);
-  });
+    books.map((book) => {
+      for (val in book) {
+        var key = val;
+        var value = book[val];
+        console.log(value);
+        // for (prop in val) {
+        //   var key = prop;
+        //   var value = val[prop];
+        //   console.log(value);
+        // }
+      }
+    });
 
   // for (variable in object) statement;
 
