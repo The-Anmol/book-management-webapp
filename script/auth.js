@@ -44,7 +44,7 @@ function register() {
   } else {
     pass_help_text.innerHTML = "Passwords cant be Empty";
   }
-  console.log(doPassHaveSpaces(pass));
+  redirect("home.html");
 }
 
 const exampleArrOfObj = [{ title: "Example Title", status: "Finished" }];
@@ -72,7 +72,7 @@ function signIn() {
     .signInWithEmailAndPassword(email, pass)
     .then((e) => {
       alert(e.message);
-      redirect("");
+      redirect("home.html");
     })
     .catch((e) => alert(e.message));
 }
@@ -115,6 +115,7 @@ function togglePassVis() {
 function comparePass(pass, c_pass) {
   return pass == c_pass;
 }
+
 function isPassEmpty(pass) {
   return pass !== "";
 }
@@ -122,45 +123,9 @@ function doPassHaveSpaces(pass) {
   return pass == pass.trim();
 }
 
-// const arrOfObj = [
-//   { title: "Title 1", status: "finishe 1" },
-//   { title: "Title 2", status: "finished 2" },
-// ];
-// const newArr = [
-//   { title: "Title new 1", status: "finishe 1" },
-//   { title: "Title new 2", status: "finished 2" },
-// ];
-
-// const arr = [...arrOfObj, ...newArr];
-
-// var data = database
-//   .collection("books")
-//   .doc("CKP7sY9sH4QLa13b8UJKIB9CR5K2")
-//   .set({ arr })
-//   .then(() => console.log("Pushed Successfully"))
-//   .catch((err) => console.error(err));
-
-// database
-//   .collection("books")
-//   .doc("CKP7sY9sH4QLa13b8UJKIB9CR5K2")
-//   .get()
-//   .then((doc) => {
-//     const dataArr = [];
-//     const data =
-//       doc?._delegate?._document?.data?.partialValue?.mapValue?.fields?.arr?.arrayValue?.values?.map(
-//         (eachElement) => dataArr.push(eachElement.mapValue.fields)
-//       );
-//     console.log(dataArr);
-//   })
-//   .catch((err) => console.error(err));
-
 function writeUserData(uid) {
   database.collection("books").doc(uid).set({ exampleArrOfObj });
 }
-
-// getBooksData(localStorage.getItem("uid"));
-
-//        Working Setting getting array of Obj from firebase and storing in array
 function getBooksData(uid) {
   const dataArr = [];
   database
@@ -169,51 +134,15 @@ function getBooksData(uid) {
     .get()
     .then((doc) => {
       const data =
-        doc._delegate._document.data.partialValue.mapValue.fields.arr.arrayValue.values.map(
+        doc._delegate._document.data.partialValue.mapValue.fields.data?.arrayValue.values.map(
           (eachElement) => dataArr.push(eachElement.mapValue.fields)
         );
+      console.log("Fetch Books Data from Firebase");
       cacheBooks(dataArr);
-      // return dataArr;
     })
-    .catch((err) => console.error(err));
-  // return dataArr;
+    .catch((err) => console.error(err.message));
 }
-
-function setBooksData(uid, prevData, newData) {
-  const updatedData = [...prevData, ...newData];
-  database
-    .collection("books")
-    .doc(uid)
-    .set({ updatedData })
-    .then(() => console.log("Pushed Successfully"))
-    .catch((err) => console.error(err));
-}
-
-function displayBooks(data) {
-  data.map((eachBook) => {
-    var books_container = document.getElementById("books-container");
-    // Create Div Element
-    var divElem = document.createElement("div");
-    const classAttr = document.createAttribute("class");
-    classAttr.value = "book";
-    divElem.setAttributeNode(classAttr);
-    var titleElem = document.createElement("p");
-    var statusElem = document.createElement("p");
-    titleElem.innerHTML = eachBook.title.stringValue;
-    statusElem.innerHTML = eachBook.status.stringValue;
-    divElem.appendChild(titleElem);
-    divElem.appendChild(statusElem);
-    books_container.appendChild(divElem);
-  });
-}
-
-function updateBooks(uid) {}
-
-console.log(getBooksData(localStorage.getItem("uid")));
-
-// function syncBooks() {}
 function cacheBooks(data) {
-  console.log(data);
   const indexedDB =
     window.indexedDB ||
     window.mozIndexedDB ||
@@ -224,8 +153,6 @@ function cacheBooks(data) {
   if (!indexedDB) {
     console.log("IndexedDB could not be found in this browser.");
   }
-
-  // 2
   const request = indexedDB.open("CarsDatabase");
 
   request.onerror = function (event) {
@@ -237,13 +164,72 @@ function cacheBooks(data) {
     const db = request.result;
     const store = db.createObjectStore("cars", { keyPath: "id" });
   };
-
+  console.log("data reached to CacheBooks fn" + data);
   request.onsuccess = function () {
     console.log("Database opened successfully");
     const db = request.result;
     const transaction = db.transaction("cars", "readwrite");
     const store = transaction.objectStore("cars");
+    data.map((eachBook) => console.log(eachBook));
+    data.map((eachBook, i) =>
+      store.put({
+        id: i,
+        title: eachBook.title.stringValue || eachBook.title,
+        status: eachBook.status.stringValue || eachBook.status,
+      })
+    );
 
+    transaction.oncomplete = function () {
+      console.log("Books Cached to IndexedDB");
+      setBooksData(localStorage.getItem("uid"), data);
+      db.close();
+    };
+  };
+}
+function setBooksData(uid, data) {
+  console.log("Set Books Data:");
+  if (data.length !== 0) {
+    database
+      .collection("books")
+      .doc(uid)
+      .set({ data })
+      .then(() => {
+        console.log("Set Books Data in Firebase");
+        getCachedData();
+      })
+      .catch((err) => console.error(err));
+  } else console.log("Data is Empty");
+}
+
+function getCachedData(data) {
+  const cachedData = [];
+
+  const indexedDB =
+    window.indexedDB ||
+    window.mozIndexedDB ||
+    window.webkitIndexedDB ||
+    window.msIndexedDB ||
+    window.shimIndexedDB;
+
+  const request = indexedDB.open("CarsDatabase");
+
+  request.onerror = function (event) {
+    console.error("An error occurred with IndexedDB");
+    console.error(event);
+  };
+
+  request.onsuccess = function () {
+    const db = request.result;
+    const transaction = db.transaction("cars", "readwrite");
+    const store = transaction.objectStore("cars");
+    const cursor = store.openCursor();
+    cursor.onsuccess = function () {
+      const cursorRes = cursor.result;
+      if (cursorRes) {
+        cachedData.push(cursorRes.value);
+        cursorRes.continue();
+      }
+    };
     data?.map((eachBook) => console.log(eachBook));
     data?.map((eachBook, i) =>
       store.put({
@@ -254,12 +240,62 @@ function cacheBooks(data) {
     );
 
     transaction.oncomplete = function () {
+      console.log("Books Cached to IndexedDB");
+      displayData(cachedData);
       db.close();
     };
   };
 }
 
-cacheBooks();
+function displayData(data) {
+  data.map((eachBook) => {
+    var books_container = document.getElementById("books-container");
+    // Create Div Element
+    var divElem = document.createElement("div");
+    const classAttr = document.createAttribute("class");
+    classAttr.value = "book";
+    divElem.setAttributeNode(classAttr);
+    var titleElem = document.createElement("p");
+    var statusElem = document.createElement("p");
+    titleElem.innerHTML = eachBook.title;
+    statusElem.innerHTML = eachBook.status;
+    divElem.appendChild(titleElem);
+    divElem.appendChild(statusElem);
+    books_container.appendChild(divElem);
+  });
+  console.log(" Data Displayed from IndexedDB");
+}
+
+getBooksData(localStorage.getItem("uid"));
+
+// const add-book-button = document.getElementById("add-book-button")
+function cacheNewBook(event) {
+  event.preventDefault();
+
+  const dataArr = [];
+  database
+    .collection("books")
+    .doc(localStorage.getItem("uid"))
+    .get()
+    .then((doc) => {
+      const data =
+        doc._delegate._document.data.partialValue.mapValue.fields.data.arrayValue.values.map(
+          (eachElement) => dataArr.push(eachElement.mapValue.fields)
+        );
+    })
+    .catch((err) => console.error(err));
+
+  const title = document.getElementById("book-title-input").value;
+  const status = document.getElementById("book-status-select").value;
+
+  console.log("Previus Books are",dataArr)
+  console.log("new Books is", { id: dataArr.length + 1, title, status });
+
+
+  const updatedData = [...dataArr, { id: dataArr.length + 1, title, status }];
+  cacheBooks(updatedData);
+}
+
 function isUserOnline() {
   return navigator.onLine;
 }

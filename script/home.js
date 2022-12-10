@@ -1,4 +1,4 @@
-console.log("inside home");
+// console.log("inside home");
 
 const img = "https://via.placeholder.com/192x192";
 // const text = `HEY! Your task "${title}" is now overdue.`;
@@ -77,20 +77,20 @@ if ("Notification" in window && "serviceWorker" in navigator) {
 }
 
 function notificationNotAllowed() {
-  mainDiv.style.display = "none";
-  button.style.display = "block";
+  // mainDiv.style.display = "none";
+  // button.style.display = "block";
 }
 
 function requestUserPermission() {
   Notification.requestPermission().then((permission) => {
     if (permission === "granted") {
       displayNotification();
-      button.style.display = "none";
-      mainDiv.style.display = "block";
+      // button.style.display = "none";
+      // mainDiv.style.display = "block";
     } else {
       notificationNotAllowed();
-      mainDiv.style.display = "none";
-      button.style.display = "block";
+      // mainDiv.style.display = "none";
+      // button.style.display = "block";
     }
   });
 }
