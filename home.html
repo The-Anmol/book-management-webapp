@@ -17,8 +17,8 @@
 	<body onload="getLocation()">
 		<nav class="navbar">
 			<div class="flex" style="display: flex; justify-content: space-between; vertical-align: center">
-				<div>Hi <span id="display-email "></span> !!</div>
-				<span id="display-location "></span>
+				<div>Hi <span class="display-email"></span></div>
+				<span class="display-location"></span>
 				<button onclick="signOut()">Sign out</button>
 			</div>
 		</nav>
@@ -64,8 +64,7 @@
 		</main>
 	</body>
 	<script src="./script/home.js"></script>
-	<!-- <script>
-    document.getElementById("display-email").innerHTML =
-      localStorage.getItem("email");
-  </script> -->
+	<script>
+		document.querySelectorAll('span.display-email')[0].innerText = localStorage.getItem('email');
+	</script>
 </html>
