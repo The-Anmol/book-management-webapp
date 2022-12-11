@@ -14,7 +14,7 @@ if (localStorage.getItem('email') == null || localStorage.getItem('email') == un
 const getLocation = () => {
 	navigator.geolocation.getCurrentPosition((dataObj) => {
 		// console.log(document.querySelectorAll('span.display-location'));
-		document.querySelectorAll('span.display-location')[0].innerText = `with latitude ${dataObj.coords.latitude} & longitude ${dataObj.coords.longitude}`;
+		document.querySelectorAll('span.display-location')[0].innerText = `You are at latitude ${dataObj.coords.latitude} & longitude ${dataObj.coords.longitude}`;
 	});
 };
 

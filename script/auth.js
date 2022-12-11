@@ -44,7 +44,7 @@ function register() {
 	} else {
 		pass_help_text.innerHTML = 'Passwords cant be Empty';
 	}
-	redirect('home.html');
+	redirect('');
 }
 
 // comparePass should be true
@@ -123,7 +123,7 @@ if (localStorage.getItem('uid')) {
 			.doc(uid)
 			.get()
 			.then((res) => {
-				const result = res._delegate._document.data.partialValue.mapValue.fields.data.arrayValue.values;
+				const result = res?._delegate?._document?.data?.partialValue?.mapValue?.fields?.data?.arrayValue?.values;
 
 				// console.log('result', result);
 
