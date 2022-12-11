@@ -5,7 +5,8 @@ const img = 'https://via.placeholder.com/192x192';
 const text = `HEY! Your task title is now overdue.`;
 const notification = new Notification('To do list', {body: text, icon: img});
 
-if (localStorage.getItem('email') !== null || localStorage.getItem('email') !== undefined || localStorage.getItem('email') !== '') {
+if (localStorage.getItem('email') == null || localStorage.getItem('email') == undefined || localStorage.getItem('email') == '') {
+	console.log(localStorage.getItem('email'));
 	window.location.pathname = '/';
 	alert('Pleaselogin');
 }
