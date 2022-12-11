@@ -26,36 +26,43 @@ var database = firebase.firestore();
 var isLoggedIn;
 //signup function
 function register() {
-	var email = document.getElementById('email').value.toLowerCase().trim();
-	var pass = document.getElementById('password').value;
-	var c_pass = document.getElementById('c-password').value;
-	var pass_help_text = document.querySelector('.pass-helper');
-	var c_pass_help_text = document.querySelector('.c-pass-helper');
+  var email = document.getElementById("email").value.toLowerCase().trim();
+  var pass = document.getElementById("password").value;
+  var c_pass = document.getElementById("c-password").value;
+  var pass_help_text = document.querySelector(".pass-helper");
+  var c_pass_help_text = document.querySelector(".c-pass-helper");
 
-	if (isPassEmpty(pass)) {
-		if (comparePass(pass, c_pass)) {
-			if (doPassHaveSpaces(pass)) {
-				auth.createUserWithEmailAndPassword(email, pass)
-					.then((userCred) => {
-						// console.log(userCred.user.uid);
-						writeUserData(userCred.user.uid);
-						localStorage.setItem('uid', userCred.user.uid);
-						isLoggedIn = true;
-					})
-					.catch((e) => alert(e.message));
-				pass_help_text.innerHTML = '';
-			} else {
-				pass_help_text.innerHTML = "Passwords shouldn't have spaces in them";
-			}
-			c_pass_help_text.innerHTML = '';
-		} else {
-			c_pass_help_text.innerHTML = 'Passwords do not match';
-		}
-		pass_help_text.innerHTML = '';
-	} else {
-		pass_help_text.innerHTML = 'Passwords cant be Empty';
-	}
-	redirect('');
+  if (isPassEmpty(pass)) {
+    if (comparePass(pass, c_pass)) {
+      if (doPassHaveSpaces(pass)) {
+        auth
+          .createUserWithEmailAndPassword(email, pass)
+          .then((userCred) => {
+            // console.log(userCred.user.uid);
+            // writeUserData(userCred.user.uid);
+            localStorage.setItem("uid", userCred.user.uid);
+
+            var user = auth.currentUser;
+            user
+              .sendEmailVerification()
+              .then((res) => console.log(res))
+              .catch((err) => console.error(err));
+            isLoggedIn = true;
+          })
+          .catch((e) => alert(e.message));
+        pass_help_text.innerHTML = "";
+      } else {
+        pass_help_text.innerHTML = "Passwords shouldn't have spaces in them";
+      }
+      c_pass_help_text.innerHTML = "";
+    } else {
+      c_pass_help_text.innerHTML = "Passwords do not match";
+    }
+    pass_help_text.innerHTML = "";
+  } else {
+    pass_help_text.innerHTML = "Passwords cant be Empty";
+  }
+  redirect("");
 }
 
 // comparePass should be true
@@ -63,25 +70,53 @@ function register() {
 // doPassHaveSpaces should be true
 
 // //signIN function
-function signIn() {
-	var email = document.getElementById('login-email').value;
-	var pass = document.getElementById('login-pass').value;
-	auth.signInWithEmailAndPassword(email, pass)
-		.then((res) => {
-			// console.log(res.user.uid);
-			localStorage.setItem('email', res.user.email);
-			localStorage.setItem('uid', res.user.uid);
-
-			redirect('home.html');
-		})
-		.catch((e) => alert(e.message));
+function signIn(event) {
+  // event.preventDefault();
+  var email = document.getElementById("login-email").value;
+  var pass = document.getElementById("login-pass").value;
+  auth
+    .signInWithEmailAndPassword(email, pass)
+    .then((res) => {
+      // console.log(res.user.emailVerified);
+      if (res.user.emailVerified) {
+        localStorage.setItem("email", res.user.email);
+        localStorage.setItem("uid", res.user.uid);
+        redirect("home.html");
+      } else {
+        alert(
+          "Email not verified. Please Verify your email address before login."
+        );
+        signOut();
+      }
+    })
+    .catch((e) => alert(e.message));
 }
 
 //signOut
 function signOut() {
-	auth.signOut();
-	localStorage.clear();
-	redirect('');
+  auth.signOut();
+  localStorage.clear();
+  redirect("");
+}
+
+function sendEmail(event) {
+  event.preventDefault();
+
+  var email = document
+    .querySelector(".forgot-email-input")
+    .value.toLowerCase()
+    .trim();
+
+  auth
+    .sendPasswordResetEmail(email)
+    .then((res) => {
+      console.log(res);
+    })
+    .catch((error) => {
+      var errorCode = error.code;
+      var errorMessage = error.message;
+      console.log(errorCode, errorMessage);
+    });
 }
 
 // active user to homepage
