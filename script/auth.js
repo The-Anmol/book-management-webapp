@@ -7,6 +7,17 @@ var firebaseConfig = {
 	messagingSenderId: '201799203618',
 	appId: '1:201799203618:web:a836ad60bf2657adc4837b',
 };
+
+// var firebaseConfig = {
+// apiKey: "AIzaSyBrPM3R9euZ09OBqDG4_VzLGxkWSldu-ME",
+//   authDomain: "pwa-project-48753.firebaseapp.com",
+//   projectId: "pwa-project-48753",
+//   storageBucket: "pwa-project-48753.appspot.com",
+//   messagingSenderId: "697193679714",
+//   appId: "1:697193679714:web:876fe3a745c26ee2093a3b",
+//   measurementId: "G-V7D7NT69E0"
+// };
+
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
 
