@@ -115,48 +115,6 @@ function writeUserData(uid) {
 if (localStorage.getItem('uid')) {
 	const books = [];
 
-	//   books.map((book) => console.log(book));
-	books.map((book) => {
-		for (val in book) {
-			var key = val;
-			var value = book[val];
-			console.log(value);
-			// for (prop in val) {
-			//   var key = prop;
-			//   var value = val[prop];
-			//   console.log(value);
-			// }
-		}
-	});
-
-	// for (variable in object) statement;
-
-	//   database
-	//     .collection("books")
-	//     .doc(localStorage.getItem("uid"))
-	//     .get()
-	//     .then((res) => {
-	//       const array =
-	//         res._delegate._document.data.partialValue.mapValue.fields.data
-	//           .arrayValue.values;
-
-	//       //         0  mapValue fields status
-	//       array.map((eachField) => {
-	//         console.log(eachField.mapValue.fields);
-	//       });
-	//     })
-	//     .catch((err) => console.error(err));
-
-	function addBook(event) {
-		event.preventDefault();
-		const title = document.getElementById('book-title-input').value;
-		const status = document.getElementById('book-status-select').value;
-
-		const newBook = {title, status};
-		books.push(newBook);
-		displayBooks();
-		updateBooks(books);
-	}
 	function fetchAllBooks() {
 		const uid = localStorage.getItem('uid');
 		console.log(' fetch book');
@@ -185,7 +143,6 @@ if (localStorage.getItem('uid')) {
 					});
 			});
 	}
-
 	function displayBooks() {
 		const uid = localStorage.getItem('uid');
 		console.log('iniside display book');
@@ -209,6 +166,18 @@ if (localStorage.getItem('uid')) {
 			books_container.appendChild(divElem);
 		});
 	}
+
+	function addBook(event) {
+		event.preventDefault();
+		const title = document.getElementById('book-title-input').value;
+		const status = document.getElementById('book-status-select').value;
+
+		const newBook = {title, status};
+		books.push(newBook);
+		displayBooks();
+		updateBooks(books);
+	}
+
 	function updateBooks(data, preData) {
 		const uid = localStorage.getItem('uid');
 		console.log('Set Books Data:');
@@ -227,3 +196,35 @@ if (localStorage.getItem('uid')) {
 
 	// displayBooks();
 }
+
+//   books.map((book) => console.log(book));
+// books.map((book) => {
+// 	for (val in book) {
+// 		var key = val;
+// 		var value = book[val];
+// 		console.log(value);
+// 		// for (prop in val) {
+// 		//   var key = prop;
+// 		//   var value = val[prop];
+// 		//   console.log(value);
+// 		// }
+// 	}
+// });
+
+// for (variable in object) statement;
+
+//   database
+//     .collection("books")
+//     .doc(localStorage.getItem("uid"))
+//     .get()
+//     .then((res) => {
+//       const array =
+//         res._delegate._document.data.partialValue.mapValue.fields.data
+//           .arrayValue.values;
+
+//       //         0  mapValue fields status
+//       array.map((eachField) => {
+//         console.log(eachField.mapValue.fields);
+//       });
+//     })
+//     .catch((err) => console.error(err));
