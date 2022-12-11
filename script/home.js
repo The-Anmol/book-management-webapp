@@ -1,4 +1,4 @@
-console.log('inside home');
+// console.log('inside home');
 
 const img = 'https://via.placeholder.com/192x192';
 // const text = `HEY! Your task "${title}" is now overdue.`;
@@ -6,14 +6,14 @@ const text = `HEY! Your task title is now overdue.`;
 const notification = new Notification('To do list', {body: text, icon: img});
 
 if (localStorage.getItem('email') == null || localStorage.getItem('email') == undefined || localStorage.getItem('email') == '') {
-	console.log(localStorage.getItem('email'));
+	// console.log(localStorage.getItem('email'));
 	window.location.pathname = '/';
 	alert('Pleaselogin');
 }
 
 const getLocation = () => {
 	navigator.geolocation.getCurrentPosition((dataObj) => {
-		console.log(document.querySelectorAll('span.display-location'));
+		// console.log(document.querySelectorAll('span.display-location'));
 		document.querySelectorAll('span.display-location')[0].innerText = `with latitude ${dataObj.coords.latitude} & longitude ${dataObj.coords.longitude}`;
 	});
 };
@@ -61,7 +61,7 @@ function displayNotification() {
 		};
 		navigator.serviceWorker.ready.then((registration) => {
 			registration.showNotification(title, options);
-			console.log('registration', registration);
+			// console.log('registration', registration);
 		});
 	}
 	navigator.serviceWorker.addEventListener('message', (message) => {

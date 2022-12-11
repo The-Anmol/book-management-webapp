@@ -10,7 +10,7 @@ const firebaseConfig = {
 const firebase = initializeApp(firebaseConfig);
 const auth = firebase.auth();
 
-console.log('run!');
+// console.log('run!');
 function register() {
 	username = document.getElementById('username').value;
 	email = document.getElementById('email').value;
@@ -20,7 +20,7 @@ function register() {
 	if (validate_email(email) == false || validate_password(password) == false) alert('Enter valid Email & password');
 	else {
 		if (check_passwords(password, c_password)) {
-			console.log('try to create user');
+			// console.log('try to create user');
 		}
 	}
 }

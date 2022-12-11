@@ -26,7 +26,7 @@ function register() {
 			if (doPassHaveSpaces(pass)) {
 				auth.createUserWithEmailAndPassword(email, pass)
 					.then((userCred) => {
-						console.log(userCred.user.uid);
+						// console.log(userCred.user.uid);
 						writeUserData(userCred.user.uid);
 						localStorage.setItem('uid', userCred.user.uid);
 						isLoggedIn = true;
@@ -57,7 +57,7 @@ function signIn() {
 	var pass = document.getElementById('login-pass').value;
 	auth.signInWithEmailAndPassword(email, pass)
 		.then((res) => {
-			console.log(res.user.uid);
+			// console.log(res.user.uid);
 			localStorage.setItem('email', res.user.email);
 			localStorage.setItem('uid', res.user.uid);
 
@@ -117,7 +117,7 @@ if (localStorage.getItem('uid')) {
 
 	function fetchAllBooks() {
 		const uid = localStorage.getItem('uid');
-		console.log(' fetch book');
+		// console.log(' fetch book');
 		database
 			.collection('books')
 			.doc(uid)
@@ -125,17 +125,17 @@ if (localStorage.getItem('uid')) {
 			.then((res) => {
 				const result = res._delegate._document.data.partialValue.mapValue.fields.data.arrayValue.values;
 
-				console.log('result', result);
+				// console.log('result', result);
 
 				result?.length > 0 &&
 					result.map((obj) => {
 						const title = obj.mapValue?.fields?.title?.stringValue;
 
 						const status = obj.mapValue?.fields?.status?.stringValue;
-						console.log(title, status);
+						// console.log(title, status);
 
 						if (title && status) {
-							console.log('inside if');
+							// console.log('inside if');
 							const newBook = {title, status};
 							books.push(newBook);
 							displayBooks();
@@ -145,12 +145,12 @@ if (localStorage.getItem('uid')) {
 	}
 	function displayBooks() {
 		const uid = localStorage.getItem('uid');
-		console.log('iniside display book');
+		// console.log('iniside display book');
 		var books_container = document.querySelector('.all-books');
 		books_container.innerHTML = '';
 
 		books.map((eachBook) => {
-			console.log('eachBook', eachBook);
+			// console.log('eachBook', eachBook);
 			// Create Div Element
 			var divElem = document.createElement('div');
 			const classAttr = document.createAttribute('class');
@@ -180,15 +180,14 @@ if (localStorage.getItem('uid')) {
 
 	function updateBooks(data, preData) {
 		const uid = localStorage.getItem('uid');
-		console.log('Set Books Data:');
+		// console.log('Set Books Data:');
 		if (data.length !== 0) {
 			database
 				.collection('books')
 				.doc(uid)
 				.set({data})
 				.then(() => {
-					console.log('Set Books Data in Firebase');
-					// getCachedData();
+					// console.log('Set Books Data in Firebase');
 				})
 				.catch((err) => console.error(err));
 		} else console.log('Data is Empty');
